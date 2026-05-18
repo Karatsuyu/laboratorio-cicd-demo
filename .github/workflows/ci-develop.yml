@@ -50,7 +50,7 @@ jobs:
           cache-dependency-path: backend/requirements.txt
       - run: pip install -r requirements.txt
         working-directory: backend
-      - run: pytest --tb=short
+      - run: PYTHONPATH=. pytest --tb=short
         working-directory: backend
 
   build-frontend:

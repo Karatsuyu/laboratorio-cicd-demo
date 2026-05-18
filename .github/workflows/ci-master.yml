@@ -50,7 +50,7 @@ jobs:
         working-directory: backend
       - name: Ejecutar pytest con cobertura
         run: |
-          pytest --cov=app --cov-report=term-missing \
+          PYTHONPATH=. pytest --cov=app --cov-report=term-missing \
                  --cov-report=xml:coverage.xml \
                  --cov-fail-under=80 \
                  --tb=short
