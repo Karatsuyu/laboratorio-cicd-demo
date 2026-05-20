@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import Optional
 
 from pydantic import BaseModel, Field
 
@@ -16,15 +15,15 @@ class TaskCreate(TaskBase):
     """DTO para crear una nueva tarea."""
 
     title: str = Field(..., min_length=1, max_length=200, description="Título de la tarea")
-    description: Optional[str] = Field(None, max_length=500)
+    description: str | None = Field(None, max_length=500)
 
 
 class TaskUpdate(BaseModel):
     """DTO para actualizar una tarea (todos los campos opcionales)."""
 
-    title: Optional[str] = Field(None, min_length=1, max_length=200)
-    description: Optional[str] = Field(None, max_length=500)
-    completed: Optional[bool] = None
+    title: str | None = Field(None, min_length=1, max_length=200)
+    description: str | None = Field(None, max_length=500)
+    completed: bool | None = None
 
 
 class TaskRead(TaskBase):

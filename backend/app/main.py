@@ -1,5 +1,3 @@
-import os
-
 from fastapi import FastAPI
 
 from app.database import Base, engine
@@ -15,21 +13,8 @@ app = FastAPI(
 )
 
 
-"""Punto de entrada de la aplicación FastAPI."""
-from fastapi import FastAPI
-
-from app.views import task_view
-
-app = FastAPI(title="Laboratorio CI/CD")
-
-app.include_router(task_view.router)
-
-
 @app.get("/health")
 def health_check() -> dict[str, str]:
     """Endpoint de health check."""
     return {"status": "ok"}
-
-
-
 app.include_router(tasks_router)
