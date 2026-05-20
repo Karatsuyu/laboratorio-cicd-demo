@@ -4,7 +4,15 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 
-class TaskCreate(BaseModel):
+class TaskBase(BaseModel):
+    """Esquema base para una tarea."""
+
+    title: str
+    description: str | None = None
+    due_date: datetime | None = None
+
+
+class TaskCreate(TaskBase):
     """DTO para crear una nueva tarea."""
 
     title: str = Field(..., min_length=1, max_length=200, description="Título de la tarea")
@@ -19,17 +27,17 @@ class TaskUpdate(BaseModel):
     completed: Optional[bool] = None
 
 
-class TaskRead(BaseModel):
-    """DTO de salida — lo que se serializa al cliente."""
+class TaskRead(TaskBase):
+    """Esquema para la lectura de una tarea."""
 
     id: int
-    title: str
-    description: Optional[str]
     completed: bool
-    created_at: Optional[datetime]
-    updated_at: Optional[datetime]
+    created_at: datetime
+    updated_at: datetime | None = None
 
-    model_config = {"from_attributes": True}
+    class Config:
+        """Configuración del esquema."""
+        from_attributes = True
 
 
 class TaskCount(BaseModel):

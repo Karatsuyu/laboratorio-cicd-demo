@@ -1,6 +1,4 @@
 """View de tareas — Router FastAPI que traduce HTTP ↔ controlador."""
-from typing import Optional
-
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
@@ -13,7 +11,7 @@ router = APIRouter(prefix="/tasks", tags=["tasks"])
 
 @router.get("/count", response_model=TaskCount)
 def count_tasks(
-    completed: Optional[bool] = None,
+    completed: bool | None = None,
     db: Session = Depends(get_db),
 ) -> TaskCount:
     """Retorna el conteo total, completadas y pendientes."""
@@ -22,7 +20,7 @@ def count_tasks(
 
 @router.get("/", response_model=list[TaskRead])
 def list_tasks(
-    completed: Optional[bool] = None,
+    completed: bool | None = None,
     db: Session = Depends(get_db),
 ) -> list:
     """Lista todas las tareas con filtro opcional."""

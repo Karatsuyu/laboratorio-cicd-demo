@@ -1,13 +1,11 @@
 """Controlador de tareas — lógica de negocio, sin conocimiento de HTTP."""
-from typing import Optional
-
 from sqlalchemy.orm import Session
 
 from app.models.task import Task
-from app.schemas.task import TaskCreate, TaskCount, TaskUpdate
+from app.schemas.task import TaskCount, TaskCreate, TaskUpdate
 
 
-def get_tasks(db: Session, completed: Optional[bool] = None) -> list[Task]:
+def get_tasks(db: Session, completed: bool | None = None) -> list[Task]:
     """Lista todas las tareas, con filtro opcional por estado."""
     query = db.query(Task)
     if completed is not None:
@@ -15,12 +13,12 @@ def get_tasks(db: Session, completed: Optional[bool] = None) -> list[Task]:
     return query.order_by(Task.id).all()
 
 
-def get_task(db: Session, task_id: int) -> Optional[Task]:
+def get_task(db: Session, task_id: int) -> Task | None:
     """Obtiene una tarea por ID. Retorna None si no existe."""
     return db.query(Task).filter(Task.id == task_id).first()
 
 
-def count_tasks(db: Session, completed: Optional[bool] = None) -> TaskCount:
+def count_tasks(db: Session, completed: bool | None = None) -> TaskCount:
     """Cuenta tareas totales, completadas y pendientes."""
     total_q = db.query(Task)
     completed_q = db.query(Task).filter(Task.completed.is_(True))
@@ -44,7 +42,7 @@ def create_task(db: Session, data: TaskCreate) -> Task:
     return task
 
 
-def update_task(db: Session, task_id: int, data: TaskUpdate) -> Optional[Task]:
+def update_task(db: Session, task_id: int, data: TaskUpdate) -> Task | None:
     """Actualiza parcialmente una tarea. Retorna None si no existe."""
     task = get_task(db, task_id)
     if task is None:
@@ -57,7 +55,7 @@ def update_task(db: Session, task_id: int, data: TaskUpdate) -> Optional[Task]:
     return task
 
 
-def toggle_task(db: Session, task_id: int) -> Optional[Task]:
+def toggle_task(db: Session, task_id: int) -> Task | None:
     """Alterna el estado completado de una tarea."""
     task = get_task(db, task_id)
     if task is None:

@@ -15,10 +15,21 @@ app = FastAPI(
 )
 
 
-@app.get("/health", tags=["health"])
-def health() -> dict:
-    """Healthcheck — usado por Docker y el pipeline de CI."""
+"""Punto de entrada de la aplicación FastAPI."""
+from fastapi import FastAPI
+
+from app.views import task_view
+
+app = FastAPI(title="Laboratorio CI/CD")
+
+app.include_router(task_view.router)
+
+
+@app.get("/health")
+def health_check() -> dict[str, str]:
+    """Endpoint de health check."""
     return {"status": "ok"}
+
 
 
 app.include_router(tasks_router)
