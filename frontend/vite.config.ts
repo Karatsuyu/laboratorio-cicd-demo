@@ -11,7 +11,7 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "lcov"],
       reportsDirectory: "./coverage",
-      // Umbrales mínimos — el pipeline de master falla si no se alcanzan
+      // El pipeline de master falla si no se alcanzan estos umbrales
       thresholds: {
         lines: 80,
         statements: 80,

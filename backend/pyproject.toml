@@ -8,6 +8,7 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
+ignore = ["B008"]
 # E = pycodestyle errores
 # F = pyflakes (imports / variables no usadas)
 # I = orden de imports (isort)
