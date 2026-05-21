@@ -4,10 +4,10 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { TaskList } from "../../components/TaskList";
-import * as api from "../../services/api";
+import { TaskList } from "../components/TaskList";
+import * as api from "../services/api";
 
-vi.mock("../../services/api");
+vi.mock("../services/api");
 
 const tasks: api.Task[] = [
   { id: 1, title: "Pendiente", completed: false },

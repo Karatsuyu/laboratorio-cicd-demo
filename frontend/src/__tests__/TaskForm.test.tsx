@@ -4,10 +4,10 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { TaskForm } from "../../components/TaskForm";
-import * as api from "../../services/api";
+import { TaskForm } from "../components/TaskForm";
+import * as api from "../services/api";
 
-vi.mock("../../services/api");
+vi.mock("../services/api");
 
 describe("TaskForm", () => {
   const onCreated = vi.fn();
