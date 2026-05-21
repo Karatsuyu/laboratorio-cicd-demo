@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import Base, engine
 from app.views.task_view import router as tasks_router
@@ -10,6 +11,14 @@ app = FastAPI(
     title="Laboratorio CI/CD",
     description="API CRUD de tareas — Etapa 2 y 3",
     version="2.0.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
