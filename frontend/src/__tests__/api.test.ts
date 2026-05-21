@@ -3,7 +3,7 @@ import axios from "axios";
 import * as api from "../services/api";
 
 vi.mock("axios");
-const mockedAxios = vi.mocked(axios);
+const mockedAxios = axios as any;
 
 beforeEach(() => {
   vi.clearAllMocks();
