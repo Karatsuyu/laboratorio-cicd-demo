@@ -1,23 +1,29 @@
+/**
+ * Test mínimo de Etapa 2 — solo verifica que la app monta.
+ * La cobertura FALLA (~35%) porque TaskForm, TaskList y api.ts
+ * no tienen tests todavía. Eso es intencional: el PR a master
+ * debe rechazarse con "coverage < 80%".
+ */
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import App from "./App";
 
-describe("App — Etapa 1", () => {
-  it("muestra el título del laboratorio", () => {
-    render(<App />);
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "Laboratorio CI/CD"
-    );
+// Mock del módulo de API para no hacer peticiones reales
+vi.mock("./services/api", () => ({
+  listTasks: vi.fn().mockResolvedValue([]),
+  countTasks: vi.fn().mockResolvedValue({ total: 0, completed: 0, pending: 0 }),
+  createTask: vi.fn(),
+  toggleTask: vi.fn(),
+  deleteTask: vi.fn(),
+}));
+
+describe("App — Etapa 2 (cobertura insuficiente)", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
   });
 
-  it("muestra el mensaje de Etapa 1", () => {
+  it("renderiza el título principal", async () => {
     render(<App />);
-    expect(screen.getByText(/Etapa 1/i)).toBeInTheDocument();
-  });
-
-  it("contiene el enlace al Swagger UI", () => {
-    render(<App />);
-    const link = screen.getByRole("link", { name: /Swagger UI/i });
-    expect(link).toHaveAttribute("href", "http://localhost:8000/docs");
+    expect(await screen.findByRole("heading", { level: 1 })).toBeInTheDocument();
   });
 });

@@ -38,7 +38,7 @@ services:
       - backend
 
   pgadmin:
-    image: dpage/pgadmin4:latest
+    image: dpage/pgadmin4:8.10
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@lab.com
       PGADMIN_DEFAULT_PASSWORD: admin
